@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:polemic_tweets/src/ui/ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Uri urlFollow = Uri.parse('https://jvngarcia.com');
+    final Uri urlGithub =
+        Uri.parse('https://github.com/jvngarcia/polemic_tweets');
+
     return Scaffold(
       body: Center(
         child: Container(
@@ -39,10 +45,22 @@ class LoginPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
-              const TextField(
-                decoration: InputDecoration(
-                  hintText: 'Email',
+              TextFormField(
+                decoration: InputDecorations.generalInputDecoration(
+                  hinText: 'example@example.com',
+                  labelText: 'Email',
                 ),
+                autocorrect: false,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  String pattern =
+                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  RegExp regExp = RegExp(pattern);
+
+                  return regExp.hasMatch(value ?? '')
+                      ? null
+                      : 'El valor ingresado no es un correo';
+                },
               ),
               const SizedBox(height: 30),
               SizedBox(
@@ -50,7 +68,7 @@ class LoginPage extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                   child: const Text('Login'),
                 ),
@@ -65,7 +83,7 @@ class LoginPage extends StatelessWidget {
                       child: ElevatedButton.icon(
                         icon: const Icon(Icons.grade_outlined),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          launchUrl(urlGithub);
                         },
                         label: const Text('Star on gihub'),
                       ),
@@ -79,7 +97,7 @@ class LoginPage extends StatelessWidget {
                       child: ElevatedButton.icon(
                         icon: const Icon(Icons.web_asset),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          launchUrl(urlFollow);
                         },
                         label: const Text('Followme'),
                       ),
