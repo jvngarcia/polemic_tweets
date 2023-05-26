@@ -7,6 +7,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Polemic Tweets',
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white38,
+          elevation: 0,
+          actionsIconTheme: IconThemeData(
+            color: Colors.blueAccent,
+          ),
+        ),
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
