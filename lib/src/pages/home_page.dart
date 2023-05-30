@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:polemic_tweets/src/ui/ui.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    String defaultLanguage = 'Informal';
+    String defaultCommunication = 'Aggressive';
+    String defaultIdiom = 'English';
+
+    var languajes = [
+      'Informal',
+      'Formal',
+    ];
+
+    var communications = [
+      'Aggressive',
+      'Innocent',
+      'Passive',
+    ];
+
+    var idioms = [
+      'English',
+      'Spanish',
+    ];
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -60,7 +85,86 @@ class HomePage extends StatelessWidget {
               },
               textAlignVertical: TextAlignVertical.top,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField(
+                    decoration: InputDecorations.generalInputDecoration(
+                      hinText: 'Type',
+                      labelText: 'Type',
+                    ),
+                    value: defaultLanguage,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: languajes.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        defaultLanguage = newValue!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: DropdownButtonFormField(
+                    decoration: InputDecorations.generalInputDecoration(
+                      hinText: 'Communication',
+                      labelText: 'Communication',
+                    ),
+                    value: defaultCommunication,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: communications.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        defaultCommunication = newValue!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: DropdownButtonFormField(
+                decoration: InputDecorations.generalInputDecoration(
+                  hinText: 'Language',
+                  labelText: 'Language',
+                ),
+                value: defaultIdiom,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: idioms.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    defaultCommunication = newValue!;
+                  });
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 45,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Generate'),
+              ),
+            ),
           ],
         ),
       ),
